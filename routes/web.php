@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 
 
 
@@ -24,7 +25,9 @@ Route::get('/', function () {
 //rota para mostrar o login form
 Route::get('/login', function (){
     return view('login');
-});
+})->name('login'); //para nomear a rota com o nome login
 
 //rota para processar o form
 Route::post('/login',  [AuthController::class, "login"]);
+
+Route::get('/home', [HomeController::class, "index"]);

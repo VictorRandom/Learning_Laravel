@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function login(Request $request){
+    public function login(Request $request)
+    {
 
         // dump($request->password);
         //dump($req["password"]);
@@ -31,6 +32,6 @@ class AuthController extends Controller
         }
 
         Auth::login($user);
-        return view('home')->with(compact('user'));
+        return redirect('home');
     }
 }

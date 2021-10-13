@@ -8,7 +8,8 @@
 </head>
 <body>
     <h1>Pagina inicial</h1>
-    <p>Bem vindo {{ $user["name"] }}</p>
+    <p>Bem vindo {{ $user->name }}</p>
+
 
     <form method="post" action="login">
         {{ csrf_field() }}
