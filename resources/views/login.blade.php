@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Login</h1>
-    @if (isset($errors))
+    @if (is_string($errors) && strlen($errors))
     <div class="alert alert-danger">
         {{ $errors }}
     </div>

@@ -22,6 +22,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/home', [HomeController::class, "index"]);
+
 //rota para mostrar o login form
 Route::get('/login', function (){
     return view('login');
@@ -29,5 +31,4 @@ Route::get('/login', function (){
 
 //rota para processar o form
 Route::post('/login',  [AuthController::class, "login"]);
-
-Route::get('/home', [HomeController::class, "index"]);
+Route::post('/logout', [AuthController::class, "logout"]);

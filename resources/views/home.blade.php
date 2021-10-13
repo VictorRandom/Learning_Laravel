@@ -11,7 +11,7 @@
     <p>Bem vindo {{ $user->name }}</p>
 
 
-    <form method="post" action="login">
+    <form method="post" action="logout">
         {{ csrf_field() }}
         <input type="submit" value="Logout" />    
     </form>
