@@ -10,7 +10,7 @@
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
     crossorigin="anonymous">
 
-    <title>Posts e Comentarios</title>
+    <title>Novo Post</title>
 </head>
 <body>
 
@@ -24,30 +24,24 @@
         </div>
     </nav>
 
-    
-    <div class="container">    
-        <h1>Pagina inicial</h1>
-        <p>Bem vindo {{ $user->name }}</p>
-                    
-        @foreach ($posts as $post)
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $post->title }}</h5>
-                    <p class="card-text">{{ $post->description }}</p>
-                    <hr>
-                    <small>Comentario</small>
-                    <hr>
-                    <a href="{{url('posts', [$post->id])}}" class="btn btn-primary">Ver detalhes do Post</a>
-                </div>
-            </div>
-        @endforeach
 
-        <a href="{{url('posts/create')}}" class="btn btn-primary">Novo Post</a>
+    <form method='post' action="{{url('post')}}">
+        {{ csrf_field() }}
+        <div class="mb-3">
+            <label for="title" class="form-label">Digite o titulo do novo Post</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Novo Post">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Descrição do novo Post</label>
+            <textarea class="form-control" id="description" name="description" type="text" rows="3"></textarea> 
+            <input type="submit" value="Enviar" class="btn btn-success">
+        </div>
+    </form>
 
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" 
     crossorigin="anonymous"></script>
+
 </body>
 </html>

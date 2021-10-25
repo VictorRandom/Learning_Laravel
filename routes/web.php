@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 
 
 
@@ -22,7 +22,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', [HomeController::class, "index"]);
+Route::get('/home', [PostController::class, "index"]);
 
 //rota para mostrar o login form
 Route::get('/login', function (){
@@ -32,3 +32,8 @@ Route::get('/login', function (){
 //rota para processar o form
 Route::post('/login',  [AuthController::class, "login"]);
 Route::post('/logout', [AuthController::class, "logout"]);
+
+//rota para a pagina de criação de novo post
+Route::get('/posts/create', [PostController::class, 'create']);
+Route::post('/post', [PostController::class, "store"]);
+Route::get('/posts/{id}', [PostController::class, 'show']);

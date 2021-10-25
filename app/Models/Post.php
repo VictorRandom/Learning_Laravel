@@ -12,5 +12,5 @@ class Post extends Model
     use SoftDeletes;
     
     protected $guarded = [];
-    
+
 }
