@@ -29,12 +29,13 @@ class PostController extends Controller
 
     public function edit($id)
     {
+        $post = Post::find($id);
 
+        return view('posts.edit')->with(compact('post'));
     }
 
     public function show($id)
     {
-        //$show = Post::where(["id"=>$id])->select(["id", "title", "description"])->first();
         
         $show = Post::find($id);
 
@@ -63,12 +64,28 @@ class PostController extends Controller
 
     public function destroy($id) 
     {
-
+        Post::find($id)->delete();
+        return redirect('home');
     }
 
     public function update($id, Request $request)
     {
-        
+        try{
+            if(empty($request->title)){
+                return redirect()->back()->with('errors', 'O titulo não foi editado');
+            }
+            if (empty($request->description)){
+                return redirect()->back()->with('errors', 'A descrição não foi editada');
+            }
+
+            Post::find($id)->update(['title'=>$request->title, 'description'=>$request->description]);
+            
+            return redirect('home'); 
+        }
+        catch (\Exception $e) {
+            Log::info(json_encode($e->getMessage()));
+            return redirect()->back(); 
+        }
     }
 
 

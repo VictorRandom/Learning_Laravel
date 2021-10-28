@@ -37,3 +37,6 @@ Route::post('/logout', [AuthController::class, "logout"]);
 Route::get('/posts/create', [PostController::class, 'create']);
 Route::post('/post', [PostController::class, "store"]);
 Route::get('/posts/{id}', [PostController::class, 'show']);
+Route::get('/posts/edit/{id}', [PostController::class, 'edit']);
+Route::put('/posts/{id}', [PostController::class, 'update']);
+Route::delete('/posts/{id}', [PostController::class, 'destroy']);
