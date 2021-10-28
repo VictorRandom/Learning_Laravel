@@ -49,6 +49,15 @@ class PostController extends Controller
             $description = $request->description;
             $user_id = Auth::id();
 
+            
+            if(empty($title)){
+                return redirect()->back()->with('errors', 'O titulo não foi digitado');
+            }
+
+            if(empty($description)){
+                return redirect()->back()->with('errors', 'A descrição não foi digitada');
+            }
+
             Post::create([
                 'title' => $title,
                 'description' => $description,
@@ -74,6 +83,7 @@ class PostController extends Controller
             if(empty($request->title)){
                 return redirect()->back()->with('errors', 'O titulo não foi editado');
             }
+
             if (empty($request->description)){
                 return redirect()->back()->with('errors', 'A descrição não foi editada');
             }

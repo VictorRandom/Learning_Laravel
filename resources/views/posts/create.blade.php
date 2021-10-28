@@ -24,6 +24,12 @@
         </div>
     </nav>
 
+    @if (is_string($errors) && strlen($errors))
+    <div class="alert alert-danger">
+        {{ $errors }}
+    </div>
+    @endif
+
 
     <form method='post' action="{{url('post')}}">
         {{ csrf_field() }}
