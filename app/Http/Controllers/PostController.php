@@ -29,17 +29,41 @@ class PostController extends Controller
 
     public function edit($id)
     {
-        $post = Post::find($id);
 
-        return view('posts.edit')->with(compact('post'));
+        try{
+            $user_id = Auth::id();
+
+            if(empty($user_id)){
+                return redirect('login');
+            }
+            
+            $post = Post::findOrFail($id);
+
+            return view('posts.edit')->with(compact('post'));
+        }
+            catch(\Exception $e) {
+                Log::info(json_encode($e->getMessage()));
+                return view('errors.internal-error'); 
+        }
     }
 
     public function show($id)
     {
-        
-        $show = Post::find($id);
+        try{
+            $user_id = Auth::id();
 
-        return view('posts.show')->with(compact('show'));
+            if(empty($user_id)){
+                return redirect('login');
+            }
+
+            $show = Post::findOrFail($id);
+
+            return view('posts.show')->with(compact('show'));
+        }
+        catch(\Exception $e) {
+            Log::info(json_encode($e->getMessage()));
+            return view('errors.not-found'); 
+        }
     }
 
     public function store(Request $request)
@@ -49,6 +73,9 @@ class PostController extends Controller
             $description = $request->description;
             $user_id = Auth::id();
 
+            if(empty($user_id)){
+                return redirect('login');
+            }
             
             if(empty($title)){
                 return redirect()->back()->with('errors', 'O titulo não foi digitado');
@@ -73,13 +100,30 @@ class PostController extends Controller
 
     public function destroy($id) 
     {
-        Post::find($id)->delete();
-        return redirect('home');
+        try{
+            $user_id = Auth::id();
+
+            if(empty($user_id)){
+                return redirect('login');
+            }
+            Post::find($id)->delete();
+            return redirect('home');
+        }
+        catch (\Exception $e){
+            Log::info(json_encode($e->getMessage()));
+            return redirect()->back(); 
+        }
     }
 
     public function update($id, Request $request)
     {
         try{
+            $user_id = Auth::id();
+
+            if(empty($user_id)){
+                return redirect('login');
+            }
+
             if(empty($request->title)){
                 return redirect()->back()->with('errors', 'O titulo não foi editado');
             }
