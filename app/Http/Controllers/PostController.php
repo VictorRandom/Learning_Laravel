@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use Illuminate\Support\Facades\Log;
+use App\Models\User;
 
 
 class PostController extends Controller
@@ -33,13 +34,20 @@ class PostController extends Controller
         try{
             $user_id = Auth::id();
 
+            $post_user = Post::find($id);
+            $post_user_id = $post_user->user_id;
+
             if(empty($user_id)){
                 return redirect('login');
+            }
+
+            if($user_id != $post_user_id){ 
+                return view('errors.internal-error');
             }
             
             $post = Post::findOrFail($id);
 
-            return view('posts.edit')->with(compact('post'));
+            return view('posts.edit')->with(compact('post', 'post_user_id'));
         }
             catch(\Exception $e) {
                 Log::info(json_encode($e->getMessage()));
@@ -78,11 +86,11 @@ class PostController extends Controller
             }
             
             if(empty($title)){
-                return redirect()->back()->with('errors', 'O titulo não foi digitado');
+                return redirect()->back()->with('errors', 'O seu post precisa de um titulo');
             }
 
             if(empty($description)){
-                return redirect()->back()->with('errors', 'A descrição não foi digitada');
+                return redirect()->back()->with('errors', 'O seu post precisa de uma descrição');
             }
 
             Post::create([
