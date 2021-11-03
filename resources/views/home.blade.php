@@ -30,7 +30,7 @@
         <p>Bem vindo {{ $user->name }}</p>
                     
         @foreach ($posts as $post)
-            <div class="card" style="width: 18rem;">
+            <div class="card mb-3" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">{{ $post->title }}</h5>
                     <p class="card-text">{{ $post->description }}</p>
@@ -45,7 +45,7 @@
             </div>
         @endforeach
 
-        <a href="{{url('posts/create')}}" class="btn btn-primary">Novo Post</a>
+        <a href="{{url('posts/create')}}" class="btn btn-primary mt-3">Novo Post</a>
 
     </div>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -40,5 +41,40 @@ class AuthController extends Controller
     {
         Auth::logout();
         return redirect('login');
+    }
+
+    public function register(Request $request){
+
+        try {
+            $name = $request->name;
+            $email = $request->email;
+            $password = $request->password;
+
+            if(empty($name)){
+                return redirect()->back()->with('errors', 'Preencher o nome do usuário');
+            }
+
+            if(empty($email)){
+                return redirect()->back()->with('errors', 'Preencher o email do usuário');
+            }
+
+            if(empty($password)){
+                return redirect()->back()->with('errors', 'Preencher a senha do usuário');
+            }
+
+            User::create([
+                'name'=>$name,
+                'email'=>$email,
+                'password'=>$password,
+            ]);
+
+            return redirect('home');
+        }
+        catch (\Exception $e) {
+            Log::info(json_encode($e->getMessage()));
+            return redirect()->back(); 
+        }
+
+        
     }
 }

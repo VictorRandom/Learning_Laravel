@@ -40,3 +40,9 @@ Route::get('/posts/{id}', [PostController::class, 'show']);
 Route::get('/posts/edit/{id}', [PostController::class, 'edit']);
 Route::put('/posts/{id}', [PostController::class, 'update']);
 Route::delete('/posts/{id}', [PostController::class, 'destroy']);
+
+//rota para cadastrar usuários
+Route::get('/register', function(){
+    return view('register');
+});
+Route::post('/register', [AuthController::class, 'register']);
