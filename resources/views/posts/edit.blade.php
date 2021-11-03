@@ -13,6 +13,17 @@
     <title>Editar Post</title>
 </head>
 <body>
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand">Editar o Post {{ $post->id }}</a>
+                <form method="post" action="logout" class='d-flex'>
+                    {{ csrf_field() }}
+                    <input type="submit" value="Logout" class="btn btn-primary"/>    
+                </form>
+        </div>
+    </nav>
+
     <h1>Editar</h1>
 
     @if (is_string($errors) && strlen($errors))
