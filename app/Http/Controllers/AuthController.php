@@ -74,7 +74,5 @@ class AuthController extends Controller
             Log::info(json_encode($e->getMessage()));
             return redirect()->back(); 
         }
-
-        
     }
 }

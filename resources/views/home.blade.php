@@ -38,9 +38,9 @@
                     <small>Comentario</small>
                     <hr>
                     <a href="{{url('posts', [$post->id])}}" class="btn btn-primary">Ver detalhes do Post</a>
-                    @if($user->id == $post->user_id)
+                    @if(isset($post->can_edit) && $post->can_edit === true)
                         <a href="{{url('posts/edit', [$post->id])}}" class="btn btn-info">Editar</a>
-                    @endif   
+                    @endif
                 </div>
             </div>
         @endforeach

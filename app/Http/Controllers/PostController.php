@@ -20,6 +20,14 @@ class PostController extends Controller
 
         $posts = Post::get();
 
+        foreach($posts as $post) {
+           if ($post->belongsToMe()) {
+               $post->can_edit = true;
+           } else {
+               $post->can_edit = false;
+           }
+        }
+
         return view('home')->with(compact('user', 'posts'));
     }
 
@@ -41,7 +49,7 @@ class PostController extends Controller
                 return redirect('login');
             }
 
-            if($user_id != $post_user_id){ 
+            if(! $post_user->belongsToMe()){ 
                 return view('errors.internal-error');
             }
             
@@ -114,7 +122,15 @@ class PostController extends Controller
             if(empty($user_id)){
                 return redirect('login');
             }
-            Post::find($id)->delete();
+
+            $post = Post::find($id);
+
+            if (! $post->belongsToMe()) {
+                return redirect()->back();
+            }
+
+            $post->delete();
+
             return redirect('home');
         }
         catch (\Exception $e){
@@ -140,7 +156,13 @@ class PostController extends Controller
                 return redirect()->back()->with('errors', 'A descrição não foi editada');
             }
 
-            Post::find($id)->update(['title'=>$request->title, 'description'=>$request->description]);
+            $post = Post::find($id);
+
+            if (! $post->belongsToMe()) {
+                return redirect()->back();
+            }
+
+            $post->update(['title'=>$request->title, 'description'=>$request->description]);
             
             return redirect('home'); 
         }
@@ -149,7 +171,4 @@ class PostController extends Controller
             return redirect()->back(); 
         }
     }
-
-
-
 }
