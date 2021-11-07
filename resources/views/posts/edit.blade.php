@@ -17,7 +17,7 @@
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand">Editar o Post {{ $post->id }}</a>
-                <form method="post" action="logout" class='d-flex'>
+                <form method="post" action="{{url('logout')}}" class='d-flex'>
                     {{ csrf_field() }}
                     <input type="submit" value="Logout" class="btn btn-primary"/>    
                 </form>
@@ -26,10 +26,14 @@
 
     <h1>Editar</h1>
 
-    @if (is_string($errors) && strlen($errors))
-    <div class="alert alert-danger">
-        {{ $errors }}
-    </div>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
 
     <form method="post" action="{{url('posts', [$post->id])}}">

@@ -17,17 +17,22 @@
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand">Posts e Comentarios</a>
-                <form method="post" action="logout" class='d-flex'>
+                <form method="post"  action="{{url('logout')}}"  class='d-flex'>
                     {{ csrf_field() }}
                     <input type="submit" value="Logout" class="btn btn-primary"/>    
                 </form>
         </div>
     </nav>
 
-    @if (is_string($errors) && strlen($errors))
-    <div class="alert alert-danger">
-        {{ $errors }}
-    </div>
+   
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
 
 

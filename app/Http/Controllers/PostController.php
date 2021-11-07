@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use Illuminate\Support\Facades\Log;
-use App\Models\User;
-
+use App\Http\Requests\Posts\StorePostRequest;
+use App\Http\Requests\Posts\UpdatePostRequest;
 
 class PostController extends Controller
 {
@@ -82,25 +82,13 @@ class PostController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
         try {
             $title = $request->title;
             $description = $request->description;
             $user_id = Auth::id();
-
-            if(empty($user_id)){
-                return redirect('login');
-            }
             
-            if(empty($title)){
-                return redirect()->back()->with('errors', 'O seu post precisa de um titulo');
-            }
-
-            if(empty($description)){
-                return redirect()->back()->with('errors', 'O seu post precisa de uma descrição');
-            }
-
             Post::create([
                 'title' => $title,
                 'description' => $description,
@@ -139,22 +127,24 @@ class PostController extends Controller
         }
     }
 
-    public function update($id, Request $request)
+    public function update($id, UpdatePostRequest $request)
     {
         try{
             $user_id = Auth::id();
+            $title = $request->title;
+            $description = $request->description;
 
-            if(empty($user_id)){
-                return redirect('login');
-            }
+            // if(empty($user_id)){
+            //     return redirect('login');
+            // }
 
-            if(empty($request->title)){
-                return redirect()->back()->with('errors', 'O titulo não foi editado');
-            }
+            // if(empty($request->title)){
+            //     return redirect()->back()->with('errors', 'O titulo não foi editado');
+            // }
 
-            if (empty($request->description)){
-                return redirect()->back()->with('errors', 'A descrição não foi editada');
-            }
+            // if (empty($request->description)){
+            //     return redirect()->back()->with('errors', 'A descrição não foi editada');
+            // }
 
             $post = Post::find($id);
 
@@ -162,7 +152,10 @@ class PostController extends Controller
                 return redirect()->back();
             }
 
-            $post->update(['title'=>$request->title, 'description'=>$request->description]);
+            $post->update([
+                'title'=>$title, 
+                'description'=>$description
+            ]);
             
             return redirect('home'); 
         }

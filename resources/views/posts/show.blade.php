@@ -17,7 +17,7 @@
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand">Detalhes do Post {{ $show->id }}</a>
-                <form method="post" action="logout" class='d-flex'>
+                <form method="post"  action="{{url('logout')}}"  class='d-flex'>
                     {{ csrf_field() }}
                     <input type="submit" value="Logout" class="btn btn-primary"/>    
                 </form>
