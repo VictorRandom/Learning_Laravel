@@ -26,6 +26,7 @@
 
     <h1>Editar</h1>
 
+    
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>

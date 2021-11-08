@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Auth\RegisterAuthRequest;
 
 class AuthController extends Controller
 {
@@ -17,10 +18,10 @@ class AuthController extends Controller
         $email = $request->email;
         $password = $request->password;
 
-        if(empty($email) || empty($password)) {
-            //se o campo de email ou senha estiverem vazios retorna esse erro
-            return redirect()->back()->with('errors', 'Digitar usuário e senha');
-        }
+        // if(empty($email) || empty($password)) {
+        //     //se o campo de email ou senha estiverem vazios retorna esse erro
+        //     return redirect()->back()->with('errors', 'Digitar usuário e senha');
+        // }
 
         // na variavel user, comparar o email/senha do banco de dados com o email da request(digitado no formulario) achar o primeiro
         $user = User::where([
@@ -43,29 +44,32 @@ class AuthController extends Controller
         return redirect('login');
     }
 
-    public function register(Request $request){
+    public function register(RegisterAuthRequest $request){
 
         try {
             $name = $request->name;
             $email = $request->email;
             $password = $request->password;
+            $confirm = $request->confirm;
 
-            if(empty($name)){
-                return redirect()->back()->with('errors', 'Preencher o nome do usuário');
-            }
 
-            if(empty($email)){
-                return redirect()->back()->with('errors', 'Preencher o email do usuário');
-            }
+            // if(empty($name)){
+            //     return redirect()->back()->with('errors', 'Preencher o nome do usuário');
+            // }
 
-            if(empty($password)){
-                return redirect()->back()->with('errors', 'Preencher a senha do usuário');
-            }
+            // if(empty($email)){
+            //     return redirect()->back()->with('errors', 'Preencher o email do usuário');
+            // }
+
+            // if(empty($password)){
+            //     return redirect()->back()->with('errors', 'Preencher a senha do usuário');
+            // }
 
             User::create([
                 'name'=>$name,
                 'email'=>$email,
                 'password'=>$password,
+                'confirm'=>$confirm,
             ]);
 
             return redirect('home');

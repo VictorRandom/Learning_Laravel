@@ -17,10 +17,14 @@
 
     <h1>Cadastro de novo usuário</h1>
 
-    @if (is_string($errors) && strlen($errors))
-    <div class="alert alert-danger">
-        {{ $errors }}
-    </div>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
 
     <form method='post' action="{{url('register')}}">
@@ -36,8 +40,12 @@
         <div class="mb-3">
             <label for="password" class="form-label">Senha: </label>
             <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-            <input type="submit" value="Enviar" class="btn btn-success mt-3">
         </div>
+        <div class="mb-3">
+            <label for="confirm" class="form-label">Confirmar Senha: </label>
+            <input type="password" class="form-control" id="confirm" name="confirm" placeholder="Retype the Password">
+        </div>
+        <input type="submit" value="Enviar" id='submit' class="btn btn-success mt-3">
     </form>
 
     <a href="{{url('login')}}" class="btn btn-warning mt-3">Retornar</a>
@@ -45,6 +53,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" 
     crossorigin="anonymous"></script>
+
+    <script src="../js/validation.js"></script>
 
 </body>
 </html>
