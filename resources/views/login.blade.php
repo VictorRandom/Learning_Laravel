@@ -14,12 +14,8 @@
 </head>
 <body>
     <h1>Login</h1>
-    @if (is_string($errors) && strlen($errors))
-    <div class="alert alert-danger">
-        {{ $errors }}
-    </div>
-    @endif
-    {{-- @if ($errors->any())
+
+    @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -27,7 +23,7 @@
                 @endforeach
             </ul>
         </div>
-    @endif --}}
+    @endif
 
     <form method="post" action="login">
         {{ csrf_field() }} 

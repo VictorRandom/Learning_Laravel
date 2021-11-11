@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Auth\LoginAuthRequest;
 use App\Http\Requests\Auth\RegisterAuthRequest;
+
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login(LoginAuthRequest $request)
     {
 
         //criando 2 variaveis para email e senha da request (digitados no form)
@@ -31,7 +33,7 @@ class AuthController extends Controller
 
          if (empty($user)) {
             //se não encontrar o user, redirecionar de volta para a pagina inicial com o erro
-            return redirect()->back()->with('errors', 'Usuário ou senha invalida');
+            return redirect()->back()->withErrors(['invalid_password' => 'Usuário ou senha invalida']);
         }
 
         Auth::login($user);
@@ -50,26 +52,11 @@ class AuthController extends Controller
             $name = $request->name;
             $email = $request->email;
             $password = $request->password;
-            $confirm = $request->confirm;
-
-
-            // if(empty($name)){
-            //     return redirect()->back()->with('errors', 'Preencher o nome do usuário');
-            // }
-
-            // if(empty($email)){
-            //     return redirect()->back()->with('errors', 'Preencher o email do usuário');
-            // }
-
-            // if(empty($password)){
-            //     return redirect()->back()->with('errors', 'Preencher a senha do usuário');
-            // }
 
             User::create([
                 'name'=>$name,
                 'email'=>$email,
                 'password'=>$password,
-                'confirm'=>$confirm,
             ]);
 
             return redirect('home');

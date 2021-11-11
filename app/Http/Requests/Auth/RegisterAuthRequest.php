@@ -25,8 +25,8 @@ class RegisterAuthRequest extends FormRequest
     {
         return [
             'name' => 'required|min:4',
-            'email' => 'required',
-            'password' => 'required|min:4',
+            'email' => 'required|unique:users,email',
+            'password' => 'required|min:4|confirmed',
         ];
     }
 
@@ -36,8 +36,10 @@ class RegisterAuthRequest extends FormRequest
             'name.required' => 'O nome é obrigatório',
             'name.min' => 'O nome deve ter no minimo 4 caracteres',
             'email.required' => 'O email é obrigatório',
+            'email.unique' => 'O email já foi utilizado',
             'password.required' => 'A senha é obrigatória',
             'password.min' => 'A senha deve ter no minimo 4 caracteres',
+            'password.confirmed' => 'A senha deve ser igual a confirmação',
         ];
     }
 }

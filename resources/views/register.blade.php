@@ -27,23 +27,38 @@
         </div>
     @endif
 
-    <form method='post' action="{{url('register')}}">
+    <form method='post' action="{{url('register')}}" id="form-register">
         {{ csrf_field() }}
         <div class="mb-3">
             <label for="name" class="form-label">Nome: </label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+            <div class="invalid-feedback" id="invalid-name">
+               O nome é inválido
+            </div>
         </div>
+
         <div class="mb-3">
             <label for="email" class="form-label">Email: </label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+            <div class="invalid-feedback" id="invalid-email">
+                Este e-mail está inválido
+            </div>
         </div>
+
         <div class="mb-3">
             <label for="password" class="form-label">Senha: </label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+            <div class="invalid-feedback" id="invalid-password">
+                A senha não corresponde aos critérios
+            </div>
         </div>
+
         <div class="mb-3">
-            <label for="confirm" class="form-label">Confirmar Senha: </label>
-            <input type="password" class="form-control" id="confirm" name="confirm" placeholder="Retype the Password">
+            <label for="password_confirmation" class="form-label">Confirmar Senha: </label>
+            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Retype the Password" required>
+            <div class="invalid-feedback" id="invalid-password_confirmation">
+                A senha não corresponde aos critérios
+            </div>
         </div>
         <input type="submit" value="Enviar" id='submit' class="btn btn-success mt-3">
     </form>
@@ -54,7 +69,10 @@
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" 
     crossorigin="anonymous"></script>
 
-    <script src="../js/validation.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script src="{{asset('js/validation.js')}}">
+    </script>
 
 </body>
 </html>
